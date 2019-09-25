@@ -11,16 +11,25 @@ import UIKit
 struct Line {
     let color: UIColor
     var strokeWidt: Float
-    var points: [CGPoint]
+    var path: UIBezierPath
 }
 
 
 class Canvas: UIView {
-    var count = 0
-    var lines = [Line]()
+   
+    var pathLine = [Line]()
     var redoLines = [Line]()
     var strokeColor = UIColor.black
     var strokeWidth: Float = 2
+    var path = UIBezierPath()
+    
+    func setupPath() {
+        path = UIBezierPath()
+        path.lineWidth = CGFloat(strokeWidth)
+        path.lineCapStyle = .round
+        path.lineJoinStyle = .round
+
+    }
     func setStrokeColor(color: UIColor) {
         self.strokeColor = color
     }
@@ -31,58 +40,44 @@ class Canvas: UIView {
     
     func undo() {
         
-        guard !lines.isEmpty  else { return }
-        redoLines.append(lines.removeLast())
-        
+        guard !pathLine.isEmpty  else { return }
+        redoLines.append(pathLine.removeLast())
         setNeedsDisplay()
         
     }
     func redo () {
         guard !redoLines.isEmpty  else { return }
-        lines.append(redoLines.removeLast())
+        pathLine.append(redoLines.removeLast())
         setNeedsDisplay()
     }
     func clear() {
-        lines.removeAll()
+        pathLine.removeAll()
         setNeedsDisplay()
     }
-    override func draw(_ rect: CGRect)
-    {
-        super.draw(rect)
-        guard let context = UIGraphicsGetCurrentContext() else { return }
-        
-        lines.forEach { (line) in
-            context.setStrokeColor(line.color.cgColor)
-            context.setLineWidth(CGFloat(line.strokeWidt))
-            context.setLineCap(.round)
-            for (index, point) in line.points.enumerated() {
-                if index == 0 {
-                    context.move(to: point)
-                }
-                else {
-                    print(point)
-                    context.addLine(to: point)
-                }
-            }
-            context.strokePath()
-            
-        }
-        print(count)
-    }
-    
+   
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        lines.append(Line.init(color: strokeColor, strokeWidt:strokeWidth , points:
-            []))
-        count += 1
+        setupPath()
+        let touch = touches.first!
+        setupPath()
+        path.move(to: touch.location(in: self))
+        pathLine.append(Line(color: strokeColor, strokeWidt: strokeWidth, path: path))
+        setNeedsDisplay()
     }
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let point = touches.first?.location(in: nil) else { return }
-        guard var lastLine = lines.popLast() else { return }
-        lastLine.points.append(point)
-        lines.append(lastLine)
-        count += 1
+        let touch = touches.first!
+        path.addLine(to: touch.location(in: self))
         setNeedsDisplay()
     
     }
-    
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let touch = touches.first!
+        path.addLine(to: touch.location(in: self))
+        setNeedsDisplay()
+    }
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let touch = touches.first!
+        path.addLine(to: touch.location(in: self))
+        setNeedsDisplay()
+    }
+   
 }
