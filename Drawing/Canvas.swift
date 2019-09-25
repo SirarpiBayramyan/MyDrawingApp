@@ -79,5 +79,12 @@ class Canvas: UIView {
         path.addLine(to: touch.location(in: self))
         setNeedsDisplay()
     }
-   
+    override func draw(_ rect: CGRect)
+       {
+           for path_ in pathLine{
+               path_.color.setStroke()
+               path_.path.stroke()
+           }
+       }
+    
 }
