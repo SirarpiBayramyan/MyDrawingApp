@@ -25,11 +25,6 @@ class DrawViewController: UIViewController {
 
     }
     
-
-    
-    @IBAction func panDraw(_ sender: UIPanGestureRecognizer) {
-    }
-    
     @IBAction func slider(_ sender: UISlider) {
         sender.minimumValue = 3
         sender.maximumValue = 10
@@ -50,50 +45,26 @@ class DrawViewController: UIViewController {
     @IBAction func colorButton(_ sender: UIButton) {
         CanvasView.setStrokeColor(color:sender.backgroundColor!)
 }
-
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask{
+  override var supportedInterfaceOrientations: UIInterfaceOrientationMask{
         return .portrait
     }
 
         
-
-//    @IBAction func pan(_ sender: UIButton) {
-//
-//        CanvasView.setupGestureRecognizers()
-//
-//    }
     override func viewDidLoad() {
-        super.viewDidLoad()
-        //view.addGestureRecognizer(pinchMethod)
+//        super.viewDidLoad()
+//        CanvasView.isUserInteractionEnabled = true
+//        CanvasView.addGestureRecognizer(dragPan)
         
            
     }
+    let dragPan = UIPanGestureRecognizer(target: self, action: #selector(drag(recognizer:)))
+         //  view.addGestureRecognizer(dragPan)
+    @objc func drag(recognizer: UIPanGestureRecognizer)
+    {
+        
+        
+        
+    }
 }
-//    let pinchMethod = UIPinchGestureRecognizer(target: self, action: #selector(pinchHandler(gesture:)))
-//    @objc private func pinchHandler(gesture: UIPinchGestureRecognizer) {
-//        if let view = gesture.view {
-//
-//            switch gesture.state {
-//            case .changed:
-//                let pinchCenter = CGPoint(x: gesture.location(in: view).x - view.bounds.midX,
-//                                          y: gesture.location(in: view).y - view.bounds.midY)
-//                let transform = view.transform.translatedBy(x: pinchCenter.x, y: pinchCenter.y)
-//                                                .scaledBy(x: gesture.scale, y: gesture.scale)
-//                                                .translatedBy(x: -pinchCenter.x, y: -pinchCenter.y)
-//                view.transform = transform
-//                gesture.scale = 1
-//            case .ended:
-//                // Nice animation to scale down when releasing the pinch.
-//                // OPTIONAL
-//                UIView.animate(withDuration: 0.2, animations: {
-//                    view.transform = CGAffineTransform.identity
-//                })
-//            default:
-//                return
-//            }
-//
-//
-//        }
-//    }
-//}
+    
 
