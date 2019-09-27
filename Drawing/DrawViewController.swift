@@ -45,9 +45,6 @@ class DrawViewController: UIViewController {
     @IBAction func colorButton(_ sender: UIButton) {
         CanvasView.setStrokeColor(color:sender.backgroundColor!)
 }
-  override var supportedInterfaceOrientations: UIInterfaceOrientationMask{
-        return .portrait
-    }
 
         
     override func viewDidLoad() {
@@ -57,14 +54,10 @@ class DrawViewController: UIViewController {
         
            
     }
-    let dragPan = UIPanGestureRecognizer(target: self, action: #selector(drag(recognizer:)))
-         //  view.addGestureRecognizer(dragPan)
-    @objc func drag(recognizer: UIPanGestureRecognizer)
-    {
-        
-        
-        
-    }
+
+    
+
+    
 }
     
 
