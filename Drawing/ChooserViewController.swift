@@ -2,7 +2,7 @@
 //  ChooserViewController.swift
 //  Drawing
 //
-//  Created by Sirarpi on 9/26/19.
+//  Created by Sirarpi on 9/29/19.
 //  Copyright © 2019 Sirarpi. All rights reserved.
 //
 
@@ -24,5 +24,4 @@ class ChooserViewController: UIViewController {
 //    // MARK: - Navigation
 //   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 //}
-
 

@@ -1,5 +1,5 @@
 //
-//  NavigationViewController.swift
+//  DrawViewController.swift
 //  Drawing
 //
 //  Created by Sirarpi on 9/29/19.
@@ -8,17 +8,14 @@
 
 import UIKit
 
-class NavigationViewController: UINavigationController {
+class DrawViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask{
-        return .portrait
-       }
-
+    
 
     /*
     // MARK: - Navigation
