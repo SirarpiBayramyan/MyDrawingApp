@@ -52,15 +52,17 @@ class Canvas: UIView, UIGestureRecognizerDelegate {
     
     func undo() {
         
-        guard !shapeLayers.isEmpty  else { return }
+        guard !shapeLayers.isEmpty, let _ = layer.sublayers, let lastIndex = layer.sublayers?.count else { return }
+        layer.sublayers?.remove(at: lastIndex - 1)
         undoRedoLayers.append(shapeLayers.removeLast())
+        path = UIBezierPath()
         setNeedsDisplay()
         
     }
     func redo () {
-        guard !undoRedoLayers.isEmpty  else { return }
+        guard !undoRedoLayers.isEmpty else { return }
         shapeLayers.append(undoRedoLayers.removeLast())
-        
+        layer.addSublayer(shapeLayers.last!.drawLayer)
         setNeedsDisplay()
     }
     func clear() {
@@ -69,7 +71,7 @@ class Canvas: UIView, UIGestureRecognizerDelegate {
             layer.sublayers?.removeLast()
         }
         path = UIBezierPath()
-        setNeedsDisplay()      
+        setNeedsDisplay()
     }
     
    //Touch events
